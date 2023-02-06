@@ -1,0 +1,11 @@
+{
+  "name": "moviezilla-backend",
+  "version": "1.0.0",
+  "description": "Moviezilla backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node backend/server.js"
+  },
+  "author": "Lachezar Uzunov",
+  "license": "MIT"
+}
