@@ -20,7 +20,7 @@ const getSingleWatchlist = asyncHandler(async (req, res) => {
 // @route       POST /api/lists
 // @access      for registered and logged in Users only
 const createList = asyncHandler(async (req, res) => {
-  const { movieId } = req.body;
+  const { movieData } = req.body;
 
   // Get user using the id in the JWT
   const user = await User.findById(req.user.id);
@@ -33,11 +33,14 @@ const createList = asyncHandler(async (req, res) => {
   // POST/create watchlist
   const newWatchlist = await Watchlist.create({
     user: req.user.id,
-    watchlist: [],
+    watchlist: [movieData],
   });
 
   if (newWatchlist) {
-    res.status(201).json(newWatchlist);
+    res.status(201).json({
+      listId: newWatchlist._id,
+      newWatchlist,
+    });
   } else {
     res.status(400);
     throw new Error("Something went wrong");
