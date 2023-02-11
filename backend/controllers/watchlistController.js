@@ -6,11 +6,19 @@ const Watchlist = require("../models/watchlistModel");
 // @route   GET api/lists/:id
 // @access  public
 const getSingleWatchlist = asyncHandler(async (req, res) => {
-  const watchlist = await Watchlist.findById(req.params.id);
+  // Get user using the id in the JWT
+  const user = await User.findById(req.user.id);
 
-  if (!watchlist) {
-    res.status(404);
-    throw new Error("Watchlist not found");
+  if (!user) {
+    res.status(401);
+    throw new Error("User not found");
+  }
+
+  const watchlist = await Watchlist.find({ user: req.user.id });
+
+  if (watchlist.user.toString() !== req.user.id) {
+    res.status(401);
+    throw new Error("Not authorized");
   }
 
   res.status(200).json(watchlist);
