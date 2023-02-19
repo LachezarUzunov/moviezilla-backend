@@ -80,7 +80,7 @@ const updateList = asyncHandler(async (req, res) => {
 
   incomingWatchlist.map((f) => list.watchlist.push(f));
   await list.save();
-  console.log(list);
+
   res.status(200).json(list);
 });
 
